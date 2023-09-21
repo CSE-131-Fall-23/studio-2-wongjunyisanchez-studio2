@@ -19,29 +19,37 @@ public class Ruin {
 		double winLimit = in.nextDouble();
 		System.out.println("I will be satisfied and leave with: $" + winLimit);
 
-		
-		for (int i = 1; i <= 500; i++){
+
+		// "for loop" is for the simulations, as you see we are doing 500 simulations
+		for (int i = 1; i <= 10; i++){
+			// roundCounter will keep track of how many times it took to get to success/ruin
 			int roundCounter = 0;
-			while (startAmount < winLimit && startAmount > 0)
+			// i made a new variable that increases/decreases from the original amount that we can reset later
+			double newAmount = startAmount;
+			int amtLoss = 0;
+			// "while loop" runs the game play until you've reached 0 or the winLimit
+			while (newAmount < winLimit && newAmount > 0)
 			{		
-				// TODO Auto-generated method stub
+				// "if statement" is the condition where you win or lose
 				if (Math.random() <= winChance) {
-					startAmount++;
-					roundCounter++;
+					newAmount++;
 				}
 				else {
-					startAmount--;
-					roundCounter++;
+					newAmount--;
+					amtLoss++;
 				}
-
+				roundCounter++; //makes sure that the all the rounds are accounted for
 			}
-			if (startAmount == winLimit){
-				System.out.println("Success in " + roundCounter + " rounds.");
+			// another "if statement" to print the results of each simulation
+			if (newAmount == winLimit){
+				System.out.println("Simulation " + i +": " + roundCounter + " WIN");
 			}
-			else if (startAmount == 0){
-				System.out.println("Ruin in " + roundCounter + " rounds.");
+			else if (newAmount == 0){
+				System.out.println("Simulation " + i +": " + roundCounter + " LOSE");
 			}
+			newAmount = startAmount; //then after every game play we need to reset the amount to the original
 
 		}
+		System.out.println("Losses: " + amtLoss + " Simulations: " + i);
 	}
 }
